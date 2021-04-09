@@ -21,6 +21,39 @@ async function windowActions()
     });
 
     table.innerHTML = html;
+
+    // Meal chart
+    
+    let chart = new CanvasJS.Chart("chartContainer", {
+        animationEnabled: true,
+        title:{
+            text: "Ten Meals"
+        },
+        axisX: {
+            valueFormatString: "###"
+        },
+        axisY: {
+            prefix: ""
+        },
+        toolTip: {
+            shared: true
+        },
+        legend:{
+            cursor: "pointer"
+        },
+        data: [{
+            type: "stackedBar",
+            name: "Meals",
+            showInLegend: "true",
+            xValueFormatString: "###",
+            yValueFormatString: "#,###",
+            dataPoints: [
+                { label: "Sodium", y: 20 },
+                { label: "Calories", y: 100 }
+            ]
+        }]
+    });
+    chart.render();
 }
 
 window.onload = windowActions;
