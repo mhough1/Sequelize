@@ -185,6 +185,27 @@ router.put("/macros", async (req, res) => {
   }
 });
 
+router.get("/mm/:meal_id", async (req, res) =>
+ {
+  const customSQL = `SELECT m.meal_id, meal_name, calories, serving_size, cholesterol, sodium, carbs, protein, fat
+  FROM Meals m JOIN Macros ma ON m.meal_id = ma.macro_id
+  WHERE m.meal_id = ${req.params.meal_id}`;
+
+  try 
+  {
+    const result = await db.sequelizeDB.query(customSQL, 
+      {
+        type: sequelize.QueryTypes.SELECT
+      });
+    res.json(result);
+  } 
+  catch (err) 
+  {
+    console.error(err);
+    res.error('Server error');
+  }
+});
+
 /// /////////////////////////////////
 /// Dietary Restrictions Endpoints///
 /// /////////////////////////////////
